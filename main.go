@@ -47,7 +47,7 @@ func main() {
 		"It should be a positive number within [0.5, 5]. If not set, 1.0 will be used.")
 	requireEndpointArg := flag.String("require_endpoint", "true",
 		"If set, Rhino requires an endpoint (chunk of silence) before finishing inference.")
-	audioDeviceIndex := flag.Int("audio_device_index", -1, "(optional) Index of capture device to use.")
+	audioDeviceIndex := flag.Int("audio_device_index", 0, "(optional) Index of capture device to use.")
 	outputPathArg := flag.String("output_path", "", "(optional) Path to recorded audio (for debugging)")
 	showAudioDevices := flag.Bool("show_audio_devices", false, "(optional) Display all available capture devices")
 	flag.Parse()
@@ -150,7 +150,7 @@ func main() {
 	}
 	p.EndpointDurationSec = endpointDurationFloat
 
-	p.WakeWordCallback = func() { fmt.Println("[wake word]") }
+	p.WakeWordCallback = func() { fmt.Println("[Yes Sir!]") }
 	p.InferenceCallback = func(inference rhn.RhinoInference) {
 		if inference.IsUnderstood {
 			fmt.Println("{")
@@ -177,7 +177,7 @@ func main() {
 		outputFilePath, _ := filepath.Abs(*outputPathArg)
 		outputFile, err := os.Create(outputFilePath)
 		if err != nil {
-			log.Fatalf("Failed to create output audio at path %s", outputFilePath)
+			log.Fatalf("Failed to create output audio at path %s %s", outputFilePath, err)
 		}
 		defer outputFile.Close()
 
