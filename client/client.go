@@ -49,6 +49,9 @@ func ReadAudioData(audioDeviceIndex int, frameLength int) chan []int16 {
 
 }
 
+//quickCheck
+//typestate
+//john hues erlang
 func setupDevice(audioDeviceIndex int, frameLength int) (pvrecorder.PvRecorder, func()) {
 	recorder := pvrecorder.PvRecorder{
 		DeviceIndex:    audioDeviceIndex,
