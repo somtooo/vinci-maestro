@@ -8,6 +8,7 @@ import (
 	. "github.com/Picovoice/picovoice/sdk/go/v2"
 	rhn "github.com/Picovoice/rhino/binding/go/v2"
 	"github.com/somtooo/vinci-maestro/client"
+	"github.com/somtooo/vinci-maestro/iot"
 )
 
 var keywordPath string = os.Getenv("KEYWORD_PATH")
@@ -56,7 +57,11 @@ func wakeWordCallback() {
 }
 
 func inferenceCallback(inference rhn.RhinoInference) {
+
 	if inference.IsUnderstood {
+		r := iot.IntentMessage{Intent: inference.Intent,
+			Slots: inference.Slots}
+		iot.EmitIntentMessage(r)
 		fmt.Println("{")
 		fmt.Printf("  intent : '%s'\n", inference.Intent)
 		fmt.Println("  slots : {")
