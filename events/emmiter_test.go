@@ -5,15 +5,14 @@ import (
 	"testing"
 
 	"github.com/somtooo/vinci-maestro/events"
-	"github.com/somtooo/vinci-maestro/iot"
 )
 
 func Test_NewEmitter(t *testing.T) {
 	e := events.NewEmitter()
-	c := func(data iot.IntentMessage) {
+	c := func(data events.IntentMessage) {
 		fmt.Printf("This is the listner for the %s intent\n", data.Intent)
 	}
 
 	e.On("goat", c)
-	e.Emmit("goat", iot.IntentMessage{Intent: "changeLightBulb"})
+	e.Emmit("goat", events.IntentMessage{Intent: "changeLightBulb"})
 }
