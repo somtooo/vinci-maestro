@@ -115,7 +115,7 @@ func Start(event *events.Emitter, client MQTT.Client) {
 			fmt.Println(m.Topic())
 			fmt.Println(string(m.Payload()[:]))
 		}
-		if token := client.Subscribe("zigbee2mqtt/#", byte(0), f); token.Wait() && token.Error() != nil {
+		if token := client.Subscribe("zigbee2mqtt/room", byte(0), f); token.Wait() && token.Error() != nil {
 			fmt.Println(token.Error())
 			os.Exit(1)
 		}
@@ -151,12 +151,12 @@ func Start(event *events.Emitter, client MQTT.Client) {
 			fmt.Println(m.Topic())
 			fmt.Println(string(m.Payload()[:]))
 		}
-		if token := client.Subscribe("zigbee2mqtt/room/get", byte(0), f); token.Wait() && token.Error() != nil {
+		if token := client.Subscribe("zigbee2mqtt/room/", byte(0), f); token.Wait() && token.Error() != nil {
 			fmt.Println(token.Error())
 			os.Exit(1)
 		}
 
-		publish("zigbee2mqtt/room/set", 0, false, b, client)
+		publish("zigbee2mqtt/room/get", 0, false, b, client)
 
 	})
 
